@@ -1,0 +1,140 @@
+body {
+    font-family: "Poppins", sans-serif;
+    
+    max-width: 1280px;
+    margin: 0 auto;
+
+}
+
+.carrossel{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+.informacoes{
+    display: none;
+}
+
+.informacoes.ativa{
+    display: block;
+}
+
+.conteudo{
+ 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-height: 100vh;
+}
+
+.informacoes h1{
+    font-size: 35px;
+    color: #33e76c;
+    margin-bottom: 80px;
+    font-family: "GOT";
+    letter-spacing: 8px;
+
+
+-webkit-text-stroke-width: 1px;
+-webkit-text-stroke-color: #3d0428;
+
+
+
+
+
+   
+}
+@font-face {
+    font-family: "GOT";
+    src: url(../fontes/GOT.otf);
+}
+
+.informacoes .descricao{
+ 
+  width: 49%;
+  font-size: 20px;
+  color: #ffffff;
+  line-height: 40px;
+  height: 300px;
+  overflow: auto;
+  padding-right: 15px;
+
+}
+
+
+::-webkit-scrollbar{
+    width: 20px;
+    
+    }
+    ::-webkit-scrollbar-track{
+        background-color: rgba(79, 82, 82, 0.407);
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb{
+        background-color: #65036763;
+border-radius: 10px;
+border: 3px solid #eae6079d;
+    }
+
+
+.botoes-carrossel{
+   
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+
+.botoes-carrossel .botao{
+    background-color: #ffffff;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+
+.botoes-carrossel .botao.selecionado{
+    background-color: crimson;
+    border: 2px solid #a5de06;
+   
+}
+
+
+.imagem{
+    width: 100vw;
+    height: 100vh;
+    display: none;
+}
+
+.imagem.ativa{
+    display: block;
+    animation: mudarImagem 0.7s;
+}
+
+@keyframes mudarImagem{
+    from{
+        opacity: 0,85;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+main::after{
+    content: "";
+    min-height: 100vh;
+    width: 100vw;
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 10%, rgba(0,0,0,0.8) 24%, rgba(0,0,0,0.8352591036414566) 50%, rgba(0,0,0,0.8) 74%, rgba(0,0,0,1) 90%);
+    z-index: -1;
+
+}
