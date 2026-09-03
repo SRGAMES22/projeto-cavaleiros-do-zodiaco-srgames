@@ -1,243 +1,140 @@
+body {
+    font-family: "Poppins", sans-serif;
+    
+    max-width: 1280px;
+    margin: 0 auto;
+
+}
+
+.carrossel{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+.informacoes{
+    display: none;
+}
+
+.informacoes.ativa{
+    display: block;
+}
+
+.conteudo{
+ 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-height: 100vh;
+}
+
+.informacoes h1{
+    font-size: 35px;
+    color: #33e76c;
+    margin-bottom: 80px;
+    font-family: "GOT";
+    letter-spacing: 8px;
+
+
+-webkit-text-stroke-width: 1px;
+-webkit-text-stroke-color: #3d0428;
+
+
+
+
+
+   
+}
 @font-face {
     font-family: "GOT";
     src: url(../fontes/GOT.otf);
 }
 
-body {
-    font-family: "Poppins", sans-serif;
-    background-color: #000;
-    color: #fff;
-    min-height: 100vh;
-    overflow-x: hidden;
+.informacoes .descricao{
+ 
+  width: 49%;
+  font-size: 20px;
+  color: #ffffff;
+  line-height: 40px;
+  height: 300px;
+  overflow: auto;
+  padding-right: 15px;
+
 }
 
-/* ========== LAYOUT PRINCIPAL ========== */
-.container {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    min-height: 100vh;
-    max-width: 1100px;
-    margin: 0 auto;
-    position: relative;
-    gap: 20px;
-    padding: 40px 30px 100px;
-}
 
-/* ========== LADO ESQUERDO - TEXTO ========== */
-.lado-texto {
+::-webkit-scrollbar{
+    width: 20px;
+    
+    }
+    ::-webkit-scrollbar-track{
+        background-color: rgba(79, 82, 82, 0.407);
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb{
+        background-color: #65036763;
+border-radius: 10px;
+border: 3px solid #eae6079d;
+    }
+
+
+.botoes-carrossel{
+   
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    z-index: 2;
-    position: relative;
+    gap: 25px;
 }
 
-.informacoes {
-    display: none;
-    animation: fadeInTexto 0.6s ease;
+
+.botoes-carrossel .botao{
+    background-color: #ffffff;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
 }
 
-.informacoes.ativa {
-    display: block;
-}
 
-.informacoes h1 {
-    font-family: "GOT", sans-serif;
-    font-size: 38px;
-    color: #33e76c;
-    letter-spacing: 5px;
-    margin-bottom: 10px;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: #3d0428;
-}
-
-.constelacao {
-    font-size: 15px;
-    color: #a5de06;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-    opacity: 0.9;
-}
-
-.informacoes .descricao {
-    font-size: 15px;
-    line-height: 1.7;
-    color: #e0e0e0;
-    max-height: 340px;
-    overflow-y: auto;
-    padding-right: 12px;
-}
-
-.descricao::-webkit-scrollbar {
-    width: 8px;
-}
-
-.descricao::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-}
-
-.descricao::-webkit-scrollbar-thumb {
-    background: #650367;
-    border-radius: 10px;
+.botoes-carrossel .botao.selecionado{
+    background-color: crimson;
     border: 2px solid #a5de06;
+   
 }
 
-/* ========== LADO DIREITO - IMAGEM (MINIATURA) ========== */
-.lado-imagem {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+.imagem{
+    width: 100vw;
+    height: 100vh;
+    display: none;
 }
 
-.imagem-wrapper {
-    width: 280px;
-    height: 380px;
-    position: relative;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 0 30px rgba(51, 231, 108, 0.2);
-    border: 2px solid rgba(165, 222, 6, 0.25);
-    flex-shrink: 0;
+.imagem.ativa{
+    display: block;
+    animation: mudarImagem 0.7s;
 }
 
-.imagem {
-    position: absolute;
+@keyframes mudarImagem{
+    from{
+        opacity: 0,85;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+main::after{
+    content: "";
+    min-height: 100vh;
+    width: 100vw;
+    
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 10%, rgba(0,0,0,0.8) 24%, rgba(0,0,0,0.8352591036414566) 50%, rgba(0,0,0,0.8) 74%, rgba(0,0,0,1) 90%);
+    z-index: -1;
 
-.imagem.ativa {
-    opacity: 1;
-    z-index: 1;
-}
-
-/* ========== NAVEGAÇÃO ========== */
-.navegacao {
-    position: absolute;
-    bottom: 30px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-    z-index: 20;
-}
-
-.seta {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.12);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    color: #fff;
-    font-size: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0;
-}
-
-.seta:hover {
-    background: rgba(165, 222, 6, 0.3);
-    border-color: #a5de06;
-    transform: scale(1.1);
-}
-
-.seta:active {
-    transform: scale(0.95);
-}
-
-.botoes-carrossel {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-}
-
-.botao {
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.35);
-    border: 2px solid transparent;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    padding: 0;
-}
-
-.botao:hover {
-    background: rgba(255, 255, 255, 0.7);
-}
-
-.botao.selecionado {
-    background: crimson;
-    border-color: #a5de06;
-    transform: scale(1.25);
-}
-
-@keyframes fadeInTexto {
-    from {
-        opacity: 0;
-        transform: translateY(12px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ========== RESPONSIVO ========== */
-@media (max-width: 800px) {
-    .container {
-        grid-template-columns: 1fr;
-        padding: 20px 20px 90px;
-        gap: 16px;
-    }
-
-    .lado-imagem {
-        order: -1;
-    }
-
-    .imagem-wrapper {
-        width: 220px;
-        height: 300px;
-        margin: 0 auto;
-    }
-
-    .informacoes h1 {
-        font-size: 30px;
-    }
-
-    .informacoes .descricao {
-        max-height: 200px;
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .imagem-wrapper {
-        width: 180px;
-        height: 250px;
-    }
-
-    .informacoes h1 {
-        font-size: 24px;
-    }
-
-    .seta {
-        width: 38px;
-        height: 38px;
-        font-size: 22px;
-    }
 }
