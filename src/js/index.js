@@ -1,44 +1,85 @@
-const botoesCarrossel = document.querySelectorAll(".botao");
-const imagems = document.querySelectorAll(".imagem");
-const informacoes = document.querySelectorAll(".informacoes");
+document.addEventListener("DOMContentLoaded", () => {
+    const botoes = document.querySelectorAll(".botao");
+    const imagens = document.querySelectorAll(".imagem");
+    const informacoes = document.querySelectorAll(".informacoes");
+    const btnAnterior = document.querySelector(".seta-anterior");
+    const btnProximo = document.querySelector(".seta-proximo");
 
-botoesCarrossel.forEach((botao, indice) => {
-   botao.addEventListener("click", () => {
+    let indiceAtual = 0;
+    let autoplayInterval = null;
+    const TEMPO_AUTOPLAY = 6000;
+    const TOTAL = botoes.length;
 
-      desativarBotaoSelecionado();
+    function atualizarCarrossel(novoIndice) {
+        botoes[indiceAtual].classList.remove("selecionado");
+        imagens[indiceAtual].classList.remove("ativa");
+        informacoes[indiceAtual].classList.remove("ativa");
 
-      marcarBotaoSelecionado(botao);
+        indiceAtual = (novoIndice + TOTAL) % TOTAL;
 
-      esconderImagemAtiva();
+        botoes[indiceAtual].classList.add("selecionado");
+        imagens[indiceAtual].classList.add("ativa");
+        informacoes[indiceAtual].classList.add("ativa");
+    }
 
-      mostrarImagemDeFundo(indice);
+    function irParaProximo() {
+        atualizarCarrossel(indiceAtual + 1);
+        reiniciarAutoplay();
+    }
 
-      esconderInformacoesAtiva();
+    function irParaAnterior() {
+        atualizarCarrossel(indiceAtual - 1);
+        reiniciarAutoplay();
+    }
 
-      mostrarInformacoes(indice);
+    function iniciarAutoplay() {
+        pararAutoplay();
+        autoplayInterval = setInterval(irParaProximo, TEMPO_AUTOPLAY);
+    }
 
-   });
+    function pararAutoplay() {
+        if (autoplayInterval) {
+            clearInterval(autoplayInterval);
+            autoplayInterval = null;
+        }
+    }
+
+    function reiniciarAutoplay() {
+        iniciarAutoplay();
+    }
+
+    // Bolinhas
+    botoes.forEach((botao, indice) => {
+        botao.addEventListener("click", () => {
+            atualizarCarrossel(indice);
+            reiniciarAutoplay();
+        });
+    });
+
+    // Setas
+    if (btnProximo) {
+        btnProximo.addEventListener("click", irParaProximo);
+    }
+    if (btnAnterior) {
+        btnAnterior.addEventListener("click", irParaAnterior);
+    }
+
+    // Teclado
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") {
+            irParaProximo();
+        } else if (e.key === "ArrowLeft") {
+            irParaAnterior();
+        }
+    });
+
+    // Pausa no hover
+    const container = document.querySelector(".container");
+    if (container) {
+        container.addEventListener("mouseenter", pararAutoplay);
+        container.addEventListener("mouseleave", iniciarAutoplay);
+    }
+
+    // Inicia autoplay
+    iniciarAutoplay();
 });
-
-function marcarBotaoSelecionado(botao) {
-   botao.classList.add("selecionado");
-}
-function mostrarInformacoes(indice) {
-   informacoes[indice].classList.add("ativa");
-}
-function esconderInformacoesAtiva() {
-   const informacoesAtiva = document.querySelector(".informacoes.ativa");
-   informacoesAtiva.classList.remove("ativa");
-}
-function mostrarImagemDeFundo(indice) {
-   imagems[indice].classList.add("ativa");
-}
-function esconderImagemAtiva() {
-   const imagemAtiva = document.querySelector(".ativa");
-   imagemAtiva.classList.remove("ativa");
-}
-function desativarBotaoSelecionado() {
-   const botaoSelecionado = document.querySelector(".selecionado");
-   botaoSelecionado.classList.remove("selecionado");
-}
-
