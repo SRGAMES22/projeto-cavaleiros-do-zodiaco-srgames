@@ -1,140 +1,271 @@
-body {
-    font-family: "Poppins", sans-serif;
-    
-    max-width: 1280px;
-    margin: 0 auto;
-
-}
-
-.carrossel{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: -1;
-}
-
-.informacoes{
-    display: none;
-}
-
-.informacoes.ativa{
-    display: block;
-}
-
-.conteudo{
- 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    min-height: 100vh;
-}
-
-.informacoes h1{
-    font-size: 35px;
-    color: #33e76c;
-    margin-bottom: 80px;
-    font-family: "GOT";
-    letter-spacing: 8px;
-
-
--webkit-text-stroke-width: 1px;
--webkit-text-stroke-color: #3d0428;
-
-
-
-
-
-   
-}
 @font-face {
     font-family: "GOT";
     src: url(../fontes/GOT.otf);
 }
 
-.informacoes .descricao{
- 
-  width: 49%;
-  font-size: 20px;
-  color: #ffffff;
-  line-height: 40px;
-  height: 300px;
-  overflow: auto;
-  padding-right: 15px;
-
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #000;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
+/* ========== LAYOUT PRINCIPAL ========== */
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+}
 
-::-webkit-scrollbar{
-    width: 20px;
-    
-    }
-    ::-webkit-scrollbar-track{
-        background-color: rgba(79, 82, 82, 0.407);
-        border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb{
-        background-color: #65036763;
-border-radius: 10px;
-border: 3px solid #eae6079d;
-    }
+/* ========== LADO ESQUERDO - TEXTO ========== */
+.lado-texto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 40px 120px 60px;
+    z-index: 2;
+    position: relative;
+}
 
+.informacoes {
+    display: none;
+    animation: fadeInTexto 0.6s ease;
+}
 
-.botoes-carrossel{
-   
+.informacoes.ativa {
+    display: block;
+}
+
+.informacoes h1 {
+    font-family: "GOT", sans-serif;
+    font-size: 42px;
+    color: #33e76c;
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #3d0428;
+}
+
+.constelacao {
+    font-size: 16px;
+    color: #a5de06;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.informacoes .descricao {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #e0e0e0;
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 12px;
+}
+
+/* Scrollbar customizada */
+.descricao::-webkit-scrollbar {
+    width: 8px;
+}
+
+.descricao::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+}
+
+.descricao::-webkit-scrollbar-thumb {
+    background: #650367;
+    border-radius: 10px;
+    border: 2px solid #a5de06;
+}
+
+/* ========== LADO DIREITO - IMAGEM ========== */
+.lado-imagem {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #000;
+}
+
+.imagem-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.imagem {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    transform: scale(1.05);
+}
+
+.imagem.ativa {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 1;
+}
+
+/* Gradiente para suavizar a divisão */
+.lado-imagem::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 120px;
+    height: 100%;
+    background: linear-gradient(to right, #000 0%, transparent 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* ========== NAVEGAÇÃO (BOLINHAS + SETAS) ========== */
+.navegacao {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: center;
-    gap: 25px;
+    align-items: center;
+    gap: 30px;
+    z-index: 10;
 }
 
-
-.botoes-carrossel .botao{
-    background-color: #ffffff;
-    width: 15px;
-    height: 15px;
+.seta {
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(4px);
+}
+
+.seta:hover {
+    background: rgba(165, 222, 6, 0.25);
+    border-color: #a5de06;
+    transform: scale(1.1);
+}
+
+.seta:active {
+    transform: scale(0.95);
+}
+
+.botoes-carrossel {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.botao {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
     border: 2px solid transparent;
+    transition: all 0.25s ease;
     cursor: pointer;
 }
 
-
-.botoes-carrossel .botao.selecionado{
-    background-color: crimson;
-    border: 2px solid #a5de06;
-   
+.botao:hover {
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(1.15);
 }
 
-
-.imagem{
-    width: 100vw;
-    height: 100vh;
-    display: none;
+.botao.selecionado {
+    background: crimson;
+    border-color: #a5de06;
+    transform: scale(1.2);
 }
 
-.imagem.ativa{
-    display: block;
-    animation: mudarImagem 0.7s;
-}
-
-@keyframes mudarImagem{
-    from{
-        opacity: 0,85;
+/* ========== ANIMAÇÕES ========== */
+@keyframes fadeInTexto {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
     }
-    to{
+    to {
         opacity: 1;
+        transform: translateY(0);
     }
 }
 
-main::after{
-    content: "";
-    min-height: 100vh;
-    width: 100vw;
-    
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: rgb(0,0,0);
-    background: linear-gradient(90deg, rgba(0,0,0,1) 10%, rgba(0,0,0,0.8) 24%, rgba(0,0,0,0.8352591036414566) 50%, rgba(0,0,0,0.8) 74%, rgba(0,0,0,1) 90%);
-    z-index: -1;
+/* ========== RESPONSIVO ========== */
+@media (max-width: 900px) {
+    .container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 45vh 1fr;
+    }
 
+    .lado-imagem {
+        order: -1;
+        height: 45vh;
+    }
+
+    .lado-imagem::before {
+        width: 100%;
+        height: 80px;
+        top: auto;
+        bottom: 0;
+        background: linear-gradient(to top, #000 0%, transparent 100%);
+    }
+
+    .lado-texto {
+        padding: 30px 24px 100px;
+        justify-content: flex-start;
+    }
+
+    .informacoes h1 {
+        font-size: 32px;
+        letter-spacing: 4px;
+    }
+
+    .informacoes .descricao {
+        max-height: 220px;
+        font-size: 15px;
+    }
+
+    .navegacao {
+        bottom: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .informacoes h1 {
+        font-size: 26px;
+    }
+
+    .constelacao {
+        font-size: 13px;
+    }
+
+    .seta {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .botao {
+        width: 12px;
+        height: 12px;
+    }
 }
